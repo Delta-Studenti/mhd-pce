@@ -4,6 +4,7 @@ import React from "react";
 import { CircleMarker, Marker, Popup } from "react-leaflet";
 import { useQuery } from "react-query";
 import getBusses from "../../src/queries/get-busses";
+import BusMarker from "./bus/bus";
 
 const BussesLayer: React.FC = () => {
   const { data, isLoading, isFetching } = useQuery("busses", getBusses, {
@@ -22,13 +23,7 @@ const BussesLayer: React.FC = () => {
   return (
     <>
       {busses?.map((bus, i) => (
-        <CircleMarker
-          center={[bus.gps_latitude, bus.gps_longitude]}
-          key={i}
-          className="transition"
-        >
-          <Popup>{bus.line_name}</Popup>
-        </CircleMarker>
+        <BusMarker bus={bus} key={bus.vid} />
       ))}
       {isFetching && (
         <Box
